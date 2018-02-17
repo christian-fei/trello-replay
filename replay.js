@@ -24,7 +24,7 @@ function cardDescription (action) {
     return description + ` moved "${action.data.card.name}" from ${action.data.listBefore.name} to ${action.data.listAfter.name}`
   }
   if (action.type === 'commentCard') {
-    return description + ` commented on card "${action.data.card.name}"` // `${action.data.text}`
+    return description + ` commented on card "${action.data.card.name}"\n${action.data.text}`
   }
 
   return description + ' - unhandled type ->' + action.type
