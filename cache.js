@@ -9,16 +9,19 @@ module.exports = { writeCache, readCache, setKey, getKey }
 
 function writeCache (cache, name) {
   log('writeCache', name)
-  writeFileSync(jsonPathFor(name), JSON.stringify(cache), 'utf-8')
+  const contents = typeof cache === 'object' ? JSON.stringify(cache) : cache
+  writeFileSync(jsonPathFor(name), contents, 'utf-8')
 }
 
 function readCache (name) {
   log('readCache', name)
   let contents = '{}'
+  const cacheLocation = jsonPathFor(name)
   try {
-    contents = readFileSync(jsonPathFor(name), 'utf-8')
+    contents = readFileSync(cacheLocation, 'utf-8')
   } catch (e) {
-    console.error('failed to read from cache', e)
+    // console.error('failed to read from cache', e)
+    writeCache(contents, name)
   }
   return JSON.parse(contents)
 }

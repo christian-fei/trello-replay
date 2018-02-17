@@ -24,7 +24,7 @@ async function main () {
   const cards = await getBoardCards(board.id)
   process.stdout.write(JSON.stringify(cards[0]))
   for (const card of cards) {
-    setKey(card.id, card, 'cards')
+    if (!getKey(card.id, 'cards')) setKey(card.id, card, 'cards')
     if (getKey(card.id, 'actions')) continue
     const actions = await getCardActions(card.id)
     // log('actions', JSON.stringify(actions.map(a => a.type)))
