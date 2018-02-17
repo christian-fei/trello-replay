@@ -7,8 +7,7 @@ const token = process.env.npm_config_TRELLO_API_TOKEN
 module.exports = {
   getBoards,
   getBoardCards,
-  getCardActions,
-  scrape
+  getCardActions
 }
 
 function getBoards () {
@@ -27,8 +26,4 @@ function getCardActions (cardId) {
   const url = `https://api.trello.com/1/cards/${cardId}/actions?limit=100&key=${key}&token=${token}`
   log('-> getCardActions', cardId)
   return get(url, {json: true}).then(r => r.body)
-}
-
-function scrape (url) {
-  return get(url).then(r => r.body)
 }

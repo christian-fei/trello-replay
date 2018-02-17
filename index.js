@@ -1,4 +1,5 @@
-const {getBoards, getBoardCards, getCardActions, scrape} = require('./trello')
+const {getBoards, getBoardCards, getCardActions} = require('./trello')
+const {setKey, getKey} = require('./cache')
 const debug = require('debug')
 
 const boardName = process.env.npm_config_BOARD_NAME
@@ -23,7 +24,9 @@ async function main () {
   const cards = await getBoardCards(board.id)
   process.stdout.write(JSON.stringify(cards[0]))
   for (const card of cards) {
+    if (getKey(card.id)) continue
     const actions = await getCardActions(card.id)
     log('actions', JSON.stringify(actions.map(a => a.type)))
+    setKey(card.id, actions)
   }
 }
