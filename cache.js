@@ -20,7 +20,6 @@ function readCache (name) {
   try {
     contents = readFileSync(cacheLocation, 'utf-8')
   } catch (e) {
-    // console.error('failed to read from cache', e)
     writeCache(contents, name)
   }
   return JSON.parse(contents)

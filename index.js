@@ -22,7 +22,6 @@ async function main () {
   if (!board) { log(`no board found named "${boardName}"`, `\navailable ${boards.map(b => b.name).join(', ')}`); process.exit(1) }
   log(`getting cards on "${board.name}"`)
   const cards = await getBoardCards(board.id)
-  process.stdout.write(JSON.stringify(cards[0]))
   for (const card of cards) {
     if (!getKey(card.id, 'cards')) setKey(card.id, card, 'cards')
     if (getKey(card.id, 'actions')) continue
