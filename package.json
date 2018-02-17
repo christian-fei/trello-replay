@@ -6,7 +6,7 @@
   "scripts": {
     "node": "node",
     "reset": "rm actions.json; rm cards.json",
-    "build:web": "cd web; npm run build; cp -r dist/ ../www",
+    "build:web": "mkdir www; cp actions.json www/; cp cards.json www/; cd web; npm run build; cp -r dist/ ../www",
     "scrape": "node $npm_package_main",
     "replay": "node replay",
     "replay:web": "node replay.web",

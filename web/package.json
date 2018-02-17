@@ -14,7 +14,9 @@
     "choo": "^6.8.0",
     "choo-service-worker": "^2.4.0",
     "sheetify": "^7.2.0",
-    "tachyons": "^4.9.1"
+    "snarkdown": "^1.2.2",
+    "tachyons": "^4.9.1",
+    "unfetch": "^3.0.0"
   },
   "devDependencies": {
     "bankai": "^9.7.0",
