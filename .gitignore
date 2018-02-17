@@ -1,3 +1,4 @@
 .npmrc
 node_modules/
-trello-replay.json
+actions.json
+cards.json
