@@ -1,5 +1,6 @@
 var css = require('sheetify')
 var choo = require('choo')
+var fetch = require('unfetch')
 
 css('tachyons')
 
@@ -15,5 +16,21 @@ app.use(require('./stores/trello'))
 app.route('/', require('./views/main'))
 app.route('/*', require('./views/404'))
 
+init(app)
+
 if (!module.parent) app.mount('body')
 else module.exports = app
+
+function init ({emitter}) {
+  emitter.on('DOMContentLoaded', function () {
+    fetch('http://localhost:9000/actions.json', { method: 'GET' })
+    .then(res => res.json())
+    .then(data => emitter.emit('actions', data))
+    .catch(err => console.log('failed to fetch actions.json', err))
+
+    fetch('http://localhost:9000/cards.json', { method: 'GET' })
+    .then(res => res.json())
+    .then(data => emitter.emit('cards', data))
+    .catch(err => console.log('failed to fetch cards.json', err))
+  })
+}
