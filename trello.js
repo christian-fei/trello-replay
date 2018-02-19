@@ -17,7 +17,7 @@ function getBoards () {
 }
 
 function getBoardCards (boardId) {
-  const url = `https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}&cards=all`
+  const url = `https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}`
   log('-> getBoardCards', boardId)
   return get(url, {json: true}).then(r => r.body)
 }
