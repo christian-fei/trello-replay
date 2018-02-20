@@ -14,6 +14,10 @@ const avatarPrefix = css`
   border-radius: 50%;
   width: 100px;
   height: 100px;
+  position: absolute;
+  right: 4em;
+  top: 3.5em;
+  border: 1.2rem solid white;
 }
 `
 
@@ -40,16 +44,17 @@ function toCommentAction (action, actionColour) {
   //  style="background: ${actionColour};"
   let description = ''
   description += `<span>${action.date}</span>`
+
+  description += `
+  <br>
+  <i><img class="${avatarPrefix}"  src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
+
   description += `
   <br>
   <h2 class="${actionCardNamePrefix}" style="border-color: ${actionColour};">
       <img class="${cardActionPrefix}" src="/assets/comment.png">
     <span>"${action.data.card.name}"</span>
   </h2>`
-
-  description += `
-  <br>
-  <i><img class="${avatarPrefix}"  src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
 
   description += `
   <br>
@@ -61,16 +66,17 @@ function toCommentAction (action, actionColour) {
 function toUpdateAction (action, actionColour) {
   let description = ''
   description += `<span>${action.date}</span>`
+
+  description += `
+  <br>
+  <img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/>`
+
   description += `
   <br>
   <h2 class="${actionCardNamePrefix}" style="border-color: ${actionColour};">
     <img class="${cardActionPrefix}" src="/assets/forward.png">
     <span>"${action.data.card.name}"</span>
   </h2>`
-
-  description += `
-  <br>
-  <i><img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
 
   description += `
   <br>

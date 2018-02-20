@@ -38,6 +38,7 @@ const actionPrefix = css`
   max-width: 100vw;
   overflow: scroll;
   max-height: 100vh;
+  position: relative;
 }
 :host pre {
   white-space: pre-line;
