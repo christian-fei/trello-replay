@@ -18,6 +18,20 @@ const horizonalPrefix = css`
   */
  min-width: 100%;
 }
+
+body::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 1em rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
+}
 `
 const actionPrefix = css`
 :host {
