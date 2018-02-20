@@ -1,4 +1,4 @@
-- [ ] aggregate actions by card
-- [ ] calc time for card to complete
+- [x] aggregate actions by card
+- [x] calc time for card to complete
 
 - [ ] visualize waterfall
