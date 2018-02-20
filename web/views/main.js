@@ -5,6 +5,20 @@ var snarkdown = require('snarkdown')
 
 var TITLE = 'web - main'
 
+const cardActionPrefix = css`
+:host {
+  vertical-align: middle;
+}
+`
+
+const avatarPrefix = css`
+:host {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+`
+
 const actionCardNamePrefix = css`
 :host {
   padding: 2em;
@@ -21,6 +35,7 @@ const horizonalPrefix = css`
   display: flex;
   flex-direction: row;
   max-height: 100vh;
+  align-items: center;
 }
 :host > * {
   min-width: 60%;
@@ -29,16 +44,12 @@ const horizonalPrefix = css`
 `
 const actionPrefix = css`
 :host {
-  border-bottom: 2px solid lightgrey;
   max-width: 100vw;
   overflow: scroll;
+  max-height: 100vh;
 }
 :host pre {
   white-space: pre-line;
-}
-:host img {
-  width: 5em;
-  vertical-align: middle;
 }
 `
 
@@ -53,8 +64,8 @@ function view (state, emit) {
   }
 
   return html`
-    <body class="code lh-copy">
-      <main class="flexxxx ${horizontal ? horizonalPrefix : ''}">
+    <body class="code lh-copy" style="font-size: 14px">
+      <main class="${horizontal ? horizonalPrefix : ''}">
         ${rawHtml(state.actions.map(toDescription).join(''))}
       </main>
     </body>
@@ -64,15 +75,14 @@ function view (state, emit) {
 function toDescription (action, index) {
   let description = `<h2>${action.date}</h2>
     <br>
-    <i>${action.memberCreator.initials}</i>`
+    <i><img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
 
   const actionColour = stringToColour(action.data.card.name)
   if (action.type === 'updateCard') {
     description += `
-      <img src="/assets/forward.png">
-      moved
       <br>
       <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
+        <img class="${cardActionPrefix}" src="/assets/forward-white.png">
         <span>"${action.data.card.name}"</span>
       </h2>
       <br>
@@ -81,14 +91,12 @@ function toDescription (action, index) {
   }
   if (action.type === 'commentCard') {
     description += `
-      <img src="/assets/comment.png">
-      commented on card
-      <br>
-      <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
-        <span>"${action.data.card.name}"</span>
-      </h2>
-      <br>
-      <h3>${snarkdown(action.data.text)}</h3>`
+    <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
+        <img class="${cardActionPrefix}" src="/assets/comment-white.png">
+      <span>"${action.data.card.name}"</span>
+    </h2>
+    <br>
+    <h3>${snarkdown(action.data.text)}</h3>`
   }
   return `
     <section class="${actionPrefix} pa5">${description}</section>`
