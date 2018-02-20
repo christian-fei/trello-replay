@@ -19,7 +19,7 @@ const avatarPrefix = css`
 
 const actionCardNamePrefix = css`
 :host {
-  padding: 2em;
+  padding: 2em 0;
   line-height: 1.5;
   border-top-width: 1em;
   border-top-style: solid;
