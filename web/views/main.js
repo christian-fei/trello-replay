@@ -62,5 +62,5 @@ function toAction (action, index) {
     description += toCommentAction(action, actionColour)
   }
   return `
-    <section class="${actionPrefix} pa5">${description}</section>`
+    <section tabindex="${index}" class="${actionPrefix} pa5">${description}</section>`
 }
