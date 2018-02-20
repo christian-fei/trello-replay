@@ -1,5 +1,5 @@
-const {getBoards, getBoardCards, getCardActions} = require('./trello')
-const {writeCache, setKey, getKey} = require('./cache')
+const {getBoards, getBoardCards, getCardActions} = require('./lib/trello')
+const {writeCache, setKey, getKey} = require('./lib/cache')
 const debug = require('debug')
 
 const boardName = process.env.npm_config_BOARD_NAME

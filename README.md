@@ -23,3 +23,7 @@ to see what happened on your trello board.
 go to https://trello.com/app-key to get trello key
 
 go to https://trello.com/app-key to manually generate a Token
+
+# License
+
+[MIT](./LICENSE.md)

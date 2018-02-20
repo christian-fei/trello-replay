@@ -1,7 +1,7 @@
 const {createServer} = require('http')
 const {createReadStream} = require('fs')
 const {parse} = require('url')
-const mime = require('./mime')
+const mime = require('./lib/mime')
 
 createServer(requestListener)
 .listen(process.env.npm_config_HTTP_PORT || 9000, function () {

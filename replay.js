@@ -1,9 +1,9 @@
 const debug = require('debug')
 const log = debug('replay')
-const {sortByDate, groupByCard, cardDescription, groupByUser, fromDate, toDate} = require('./action-utils')
+const {sortByDate, groupByCard, cardDescription, groupByUser, fromDate, toDate} = require('./lib/action-utils')
 debug.enable('*')
 
-const {readCache} = require('./cache')
+const {readCache} = require('./lib/cache')
 
 const actionsMap = readCache('actions')
 
