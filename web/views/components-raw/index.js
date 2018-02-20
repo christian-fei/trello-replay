@@ -52,8 +52,9 @@ function toCommentAction (action, actionColour) {
   description += `
   <br>
   <h2 class="${actionCardNamePrefix}" style="border-color: ${actionColour};">
-      <img class="${cardActionPrefix}" src="/assets/comment.png">
     <span>"${action.data.card.name}"</span>
+    </br>
+    <img class="${cardActionPrefix}" src="/assets/comment.png">
   </h2>`
 
   description += `
@@ -74,8 +75,9 @@ function toUpdateAction (action, actionColour) {
   description += `
   <br>
   <h2 class="${actionCardNamePrefix}" style="border-color: ${actionColour};">
-    <img class="${cardActionPrefix}" src="/assets/forward.png">
     <span>"${action.data.card.name}"</span>
+    </br>
+    <img class="${cardActionPrefix}" src="/assets/forward.png">
   </h2>`
 
   description += `
