@@ -75,7 +75,8 @@ function toUpdateAction (action, actionColour) {
   description += `
   <br>
   from <h1 class="di">${action.data.listBefore.name}</h1>
-  to <h1 class="di">${action.data.listAfter.name}</h1>`
+  to <h1 class="di">${action.data.listAfter.name}</h1>
+  ${action.data.listAfter.name.toLowerCase().includes('done') ? '<h1>🎉🎊🚀</h1>' : ''}`
 
   return description
 }
