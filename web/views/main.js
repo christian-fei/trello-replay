@@ -35,7 +35,6 @@ const horizonalPrefix = css`
   display: flex;
   flex-direction: row;
   max-height: 100vh;
-  align-items: center;
 }
 :host > * {
   min-width: 60%;
@@ -73,9 +72,7 @@ function view (state, emit) {
 }
 
 function toDescription (action, index) {
-  let description = `<h2>${action.date}</h2>
-    <br>
-    <i><img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
+  let description = ''
 
   const actionColour = stringToColour(action.data.card.name)
   if (action.type === 'updateCard') {
@@ -84,34 +81,45 @@ function toDescription (action, index) {
       <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
         <img class="${cardActionPrefix}" src="/assets/forward-white.png">
         <span>"${action.data.card.name}"</span>
-      </h2>
+      </h2>`
+
+    description += `<h2>${action.date}</h2>
+    <br>
+    <i><img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
+
+    description += `
       <br>
       from <h1 class="di">${action.data.listBefore.name}</h1>
       to <h1 class="di">${action.data.listAfter.name}</h1>`
   }
   if (action.type === 'commentCard') {
     description += `
-    <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
-        <img class="${cardActionPrefix}" src="/assets/comment-white.png">
-      <span>"${action.data.card.name}"</span>
-    </h2>
-    <br>
-    <h3>${snarkdown(action.data.text)}</h3>`
+      <br>
+      <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
+          <img class="${cardActionPrefix}" src="/assets/comment-white.png">
+        <span>"${action.data.card.name}"</span>
+      </h2>`
+    description += `<h2>${action.date}</h2>
+      <br>
+      <i><img class="${avatarPrefix}" src="https://trello-avatars.s3.amazonaws.com/${action.memberCreator.avatarHash}/170.png"/></i>`
+
+    description += `
+      <br>
+      <h3>${snarkdown(action.data.text)}</h3>`
   }
   return `
     <section class="${actionPrefix} pa5">${description}</section>`
 }
 
-
 function stringToColour (str) {
-  var hash = 0;
-  for (var i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  var hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
   }
-  var colour = '#';
-  for (var i = 0; i < 3; i++) {
-    var value = (hash >> (i * 8)) & 0xFF;
-    colour += ('00' + value.toString(16)).substr(-2);
+  var colour = '#'
+  for (let i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xFF
+    colour += ('00' + value.toString(16)).substr(-2)
   }
-  return colour;
+  return colour
 }
