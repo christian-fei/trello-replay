@@ -5,6 +5,17 @@ var snarkdown = require('snarkdown')
 
 var TITLE = 'web - main'
 
+const actionCardNamePrefix = css`
+:host {
+  padding: 2em;
+  line-height: 1.5;
+}
+:host span {
+  background-color:white;
+  padding: 0.3em;
+}
+`
+
 const horizonalPrefix = css`
 :host {
   display: flex;
@@ -61,7 +72,9 @@ function toDescription (action, index) {
       <img src="/assets/forward.png">
       moved
       <br>
-      <h2 style="border-bottom: 1em solid ${actionColour}; ">"${action.data.card.name}"</h2>
+      <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
+        <span>"${action.data.card.name}"</span>
+      </h2>
       <br>
       from <h1 class="di">${action.data.listBefore.name}</h1>
       to <h1 class="di">${action.data.listAfter.name}</h1>`
@@ -71,7 +84,9 @@ function toDescription (action, index) {
       <img src="/assets/comment.png">
       commented on card
       <br>
-      <h2 style="border-bottom: 1em solid ${actionColour}; ">"${action.data.card.name}"</h2>
+      <h2 class="${actionCardNamePrefix}" style="background: ${actionColour}; ">
+        <span>"${action.data.card.name}"</span>
+      </h2>
       <br>
       <h3>${snarkdown(action.data.text)}</h3>`
   }
