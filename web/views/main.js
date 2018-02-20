@@ -12,8 +12,11 @@ const horizonalPrefix = css`
   max-height: 100vh;
 }
 :host > * {
+  /*
   min-width: 60%;
   min-width: 60vw;
+  */
+ min-width: 100%;
 }
 `
 const actionPrefix = css`
