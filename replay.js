@@ -1,5 +1,6 @@
 const debug = require('debug')
 const log = debug('replay')
+const {sortByDate, groupByCard, groupByUser, fromDate, toDate} = require('./action-utils')
 debug.enable('*')
 
 const {readCache} = require('./cache')
@@ -15,15 +16,25 @@ actions.sort(sortByDate)
 // const actionsByUser = actions.reduce(groupByUser, {})
 // Object.keys(actionsByUser)
 // .forEach((user, i, arr) => {
-  //   // console.log('i', i, user)
-  //   const actions = actionsByUser[user]
-  //   console.log('user', user, actions.length)
-  // })
+//   // console.log('i', i, user)
+//   const actions = actionsByUser[user]
+//   console.log('user', user, actions.length)
+// })
+
+// log(Object.keys(actionsByUser).reduce((acc, user) => {
+//   console.log('user', user)
+//   const curr = actionsByUser[user]
+//   curr.sort(sortByDate)
+//   const from = curr.reduce(fromDate, 0)
+//   const to = curr.reduce(toDate, 0)
+//   return Object.assign({}, acc, {
+//     [user]: curr.length
+//   })
+// }))
 
 const actionsByCard = actions.reduce(groupByCard, {})
 Object.keys(actionsByCard)
 .forEach((card, i, arr) => {
-  // console.log('i', i, card)
   let actions = actionsByCard[card].filter(a => a.type === 'updateCard').sort(sortByDate)
   let durationInMillis
   if (actions.length > 1) durationInMillis = +new Date(actions[actions.length - 1].date) - +new Date(actions[0].date)
@@ -40,15 +51,6 @@ Object.keys(actionsByCard)
   }
 })
 
-// log(Object.keys(actionsByUser).reduce((acc, user) => {
-//   console.log('user', user)
-//   const curr = actionsByUser[user]
-//   curr.sort(sortByDate)
-//   // return Object.assign({}, acc, {
-//   //   [user]: curr.length
-//   // })
-// }))
-
 function cardDescription (action) {
   let description = `${action.date} - ${action.memberCreator.username}`
   if (action.type === 'updateCard') {
@@ -59,26 +61,4 @@ function cardDescription (action) {
   }
 
   return description + ' - unhandled type ->' + action.type
-}
-
-function groupByUser (acc, action) {
-  const key = action.memberCreator.initials
-  return Object.assign({}, acc, {
-    [key]: (acc[key] || []).concat([action])
-  })
-}
-function groupByCard (acc, action) {
-  const key = action.data.card.name
-  return Object.assign({}, acc, {
-    [key]: (acc[key] || []).concat([action])
-  })
-}
-
-function sortByDate (a1, a2) {
-  const d1 = new Date(a1.date)
-  const d2 = new Date(a2.date)
-  if (d1 < d2) return -1
-  if (d1 > d2) return 1
-  return 0
-  // return d1 - d2
 }

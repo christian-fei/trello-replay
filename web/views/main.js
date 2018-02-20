@@ -9,19 +9,25 @@ const horizonalPrefix = css`
 :host {
   display: flex;
   flex-direction: row;
+  max-height: 100vh;
 }
 :host > * {
-  min-width: 100vw;
+  min-width: 60%;
+  min-width: 60vw;
 }
 `
 const actionPrefix = css`
 :host {
   border-bottom: 2px solid lightgrey;
-  max-width: 40em;
+  max-width: 100vw;
   overflow: scroll;
 }
 :host pre {
   white-space: pre-line;
+}
+:host img {
+  width: 5em;
+  vertical-align: middle;
 }
 `
 
@@ -45,12 +51,28 @@ function view (state, emit) {
 }
 
 function toDescription (action, index) {
-  let description = `<b>${action.date}</b> - <i>${action.memberCreator.initials}</i>`
+  let description = `<h2>${action.date}</h2>
+    <br>
+    <i>${action.memberCreator.initials}</i>`
   if (action.type === 'updateCard') {
-    description += ` <b>moved</b> "${action.data.card.name}" from ${action.data.listBefore.name} to ${action.data.listAfter.name}`
+    description += `
+      <img src="/assets/forward.png">
+      moved
+      <br>
+      <h2>"${action.data.card.name}"</h2>
+      <br>
+      from <h1 class="di">${action.data.listBefore.name}</h1>
+      to <h1 class="di">${action.data.listAfter.name}</h1>`
   }
   if (action.type === 'commentCard') {
-    description += ` <b>commented</b> on card "${action.data.card.name}"\n${snarkdown(action.data.text)}`
+    description += `
+      <img src="/assets/comment.png">
+      commented on card
+      <br>
+      <h2>"${action.data.card.name}"</h2>
+      <br>
+      <h3>${snarkdown(action.data.text)}</h3>`
   }
-  return `<section class="${actionPrefix} pa3">${description}</section>`
+  return `
+    <section class="${actionPrefix} pa5">${description}</section>`
 }

@@ -2,6 +2,8 @@ module.exports = store
 
 function store (state, emitter) {
   state.actions = []
+  state.actionsFrom = undefined
+  state.actionsTo = undefined
   state.cards = {}
 
   emitter.on('DOMContentLoaded', function () {
