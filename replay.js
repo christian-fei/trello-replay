@@ -1,6 +1,6 @@
 const debug = require('debug')
 const log = debug('replay')
-const {sortByDate, groupByCard, groupByUser, fromDate, toDate} = require('./action-utils')
+const {sortByDate, groupByCard, cardDescription, groupByUser, fromDate, toDate} = require('./action-utils')
 debug.enable('*')
 
 const {readCache} = require('./cache')
@@ -50,15 +50,3 @@ Object.keys(actionsByCard)
     }
   }
 })
-
-function cardDescription (action) {
-  let description = `${action.date} - ${action.memberCreator.username}`
-  if (action.type === 'updateCard') {
-    return description + ` moved "${action.data.card.name}" from ${action.data.listBefore.name} to ${action.data.listAfter.name}`
-  }
-  if (action.type === 'commentCard') {
-    return description + ` commented on card "${action.data.card.name}"\n${action.data.text}`
-  }
-
-  return description + ' - unhandled type ->' + action.type
-}

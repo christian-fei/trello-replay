@@ -4,6 +4,7 @@ module.exports = {
   sortByDate,
   fromDate,
   toDate,
+  cardDescription
 }
 
 function groupByUser (acc, action) {
@@ -37,4 +38,16 @@ function toDate (acc, action) {
   const date = Date.parse(action.date)
   if (!acc) return date
   return acc < date ? date : acc
+}
+
+function cardDescription (action) {
+  let description = `${action.date} - ${action.memberCreator.username}`
+  if (action.type === 'updateCard') {
+    return description + ` moved "${action.data.card.name}" from ${action.data.listBefore.name} to ${action.data.listAfter.name}`
+  }
+  if (action.type === 'commentCard') {
+    return description + ` commented on card "${action.data.card.name}"\n${action.data.text}`
+  }
+
+  return description + ' - unhandled type ->' + action.type
 }
