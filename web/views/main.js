@@ -35,6 +35,7 @@ outline: 1px solid slategrey;
 `
 const actionPrefix = css`
 :host {
+  display: block;
   max-width: 100vw;
   overflow: scroll;
   max-height: 100vh;
