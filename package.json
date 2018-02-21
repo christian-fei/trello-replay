@@ -10,6 +10,7 @@
     "scrape": "node scrape",
     "replay": "node replay",
     "replay:web": "node replay.web",
+    "start": "npm run replay:web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
