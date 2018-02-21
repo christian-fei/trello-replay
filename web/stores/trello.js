@@ -8,8 +8,7 @@ function store (state, emitter) {
   state.attachmentsByCard = {}
 
   emitter.on('DOMContentLoaded', function () {
-    emitter.on('actions', function (actionsMap) {
-      const actions = Object.keys(actionsMap).reduce((acc, id) => acc.concat(actionsMap[id]), [])
+    emitter.on('actions', function (actions) {
       actions.sort((a1, a2) => {
         const d1 = new Date(a1.date)
         const d2 = new Date(a2.date)
