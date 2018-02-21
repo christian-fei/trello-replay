@@ -48,11 +48,16 @@ const actionPrefix = css`
 const attachmentsPrefix = css`
 :host{
   height: 100px;
+  height: auto;
+  padding: 0.5em;
 }
-
 :host img {
   border-radius: 2px;
   width: 350px;
+  vertical-align: middle;
+  box-shadow: 1px 1px 11px 0px #dedede;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 `
 
@@ -88,7 +93,8 @@ function toActionWithAttachments (attachmentsByCard) {
         ${(attachmentsByCard[action.data.card.id] || [])
           .map(a => a.url)
           .filter(u => u.includes('.png'))
-          .map(u => `<img src="${u}"/>`).join('')}
+          .map(u => `<a tabindex="-1" target="_blank" href="${u}"><img src="${u}"/></a>`)
+          .join('')}
       </section>
     </section>`
 
