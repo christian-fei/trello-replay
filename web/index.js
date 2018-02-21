@@ -13,8 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(require('./stores/trello'))
 
-app.route('/', require('./views/main'))
-app.route('/*', require('./views/404'))
+app.route('/*', require('./views/main'))
 
 init(app)
 
