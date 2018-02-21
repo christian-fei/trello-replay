@@ -51,8 +51,8 @@ const attachmentsPrefix = css`
 }
 
 :host img {
-  border: 1px solid red;
-  border-radius: 5%;
+  border-radius: 2px;
+  width: 350px;
 }
 `
 
@@ -85,7 +85,10 @@ function toActionWithAttachments (attachmentsByCard) {
     <section>
       ${toAction(action, index)}
       <section class="${attachmentsPrefix}">
-        ${(attachmentsByCard[action.data.card.id] || []).map(a => `<img src="${a.url}"/>`).join('')}
+        ${(attachmentsByCard[action.data.card.id] || [])
+          .map(a => a.url)
+          .filter(u => u.includes('.png'))
+          .map(u => `<img src="${u}"/>`).join('')}
       </section>
     </section>`
 
