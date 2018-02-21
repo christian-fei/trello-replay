@@ -3,3 +3,4 @@ node_modules/
 actions.json
 cards.json
 www/
+attachmentsByCard.json

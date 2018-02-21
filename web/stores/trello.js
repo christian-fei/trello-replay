@@ -5,6 +5,7 @@ function store (state, emitter) {
   state.actionsFrom = undefined
   state.actionsTo = undefined
   state.cards = {}
+  state.attachmentsByCard = {}
 
   emitter.on('DOMContentLoaded', function () {
     emitter.on('actions', function (actionsMap) {
@@ -23,6 +24,10 @@ function store (state, emitter) {
     })
     emitter.on('cards', function (cards) {
       state.cards = cards
+      emitter.emit(state.events.RENDER)
+    })
+    emitter.on('attachmentsByCard', function (attachmentsByCard) {
+      state.attachmentsByCard = attachmentsByCard
       emitter.emit(state.events.RENDER)
     })
   })

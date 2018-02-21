@@ -32,5 +32,10 @@ function init ({emitter}) {
     .then(res => res.json())
     .then(data => emitter.emit('cards', data))
     .catch(err => console.log('failed to fetch cards.json', err))
+
+    fetch('http://localhost:9000/attachmentsByCard.json', { method: 'GET' })
+    .then(res => res.json())
+    .then(data => emitter.emit('attachmentsByCard', data))
+    .catch(err => console.log('failed to fetch attachmentsByCard.json', err))
   })
 }

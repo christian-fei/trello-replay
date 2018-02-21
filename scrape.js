@@ -1,4 +1,4 @@
-const {getBoards, getBoardCards, getCardActions} = require('./lib/trello')
+const {getBoards, getBoardCards, getCardActions, getCardAttachments} = require('./lib/trello')
 const {writeCache, setKey, getKey} = require('./lib/cache')
 const debug = require('debug')
 
@@ -28,7 +28,9 @@ async function main () {
     if (!getKey(card.id, 'cards')) setKey(card.id, card, 'cards')
     if (getKey(card.id, 'actions')) continue
     const actionsByCard = await getCardActions(card.id)
+    const attachmentsByCard = await getCardAttachments(card.id)
     allActions.push(...actionsByCard)
+    setKey(card.id, attachmentsByCard, 'attachmentsByCard')
     writeCache(allActions, 'actions')
   }
 }

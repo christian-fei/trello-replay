@@ -5,8 +5,8 @@
   "main": "scrape.js",
   "scripts": {
     "node": "node",
-    "reset": "rm actions.json; rm cards.json",
-    "build:web": "mkdir www; cp actions.json www/; cp cards.json www/; cd web; npm run build; cp -r dist/ ../www",
+    "reset": "rm attachmentsByCard.json; rm actions.json; rm cards.json",
+    "build:web": "mkdir www; cp attachmentsByCard.json www/; cp actions.json www/; cp cards.json www/; cd web; npm run build; cp -r dist/ ../www",
     "scrape": "node scrape",
     "replay": "node replay",
     "replay:web": "node replay.web",

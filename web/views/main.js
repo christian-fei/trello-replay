@@ -45,6 +45,17 @@ const actionPrefix = css`
 }
 `
 
+const attachmentsPrefix = css`
+:host{
+  height: 100px;
+}
+
+:host img {
+  border: 1px solid red;
+  border-radius: 5%;
+}
+`
+
 module.exports = view
 
 function view (state, emit) {
@@ -59,11 +70,27 @@ function view (state, emit) {
     <body class="code lh-copy" style="font-size: 14px">
       <main class="${horizontal ? horizonalPrefix : ''}">
         ${state.actions
-          .map(toAction)
+          .map(toActionWithAttachments(state.attachmentsByCard))
           .map(rawHtml)}
       </main>
     </body>
   `
+}
+
+function toActionWithAttachments (attachmentsByCard) {
+  return (action, index) => {
+    let description = ''
+
+    description += `
+    <section>
+      ${toAction(action, index)}
+      <section class="${attachmentsPrefix}">
+        ${(attachmentsByCard[action.data.card.id] || []).map(a => `<img src="${a.url}"/>`).join('')}
+      </section>
+    </section>`
+
+    return description
+  }
 }
 
 function toAction (action, index) {
