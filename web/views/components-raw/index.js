@@ -1,5 +1,6 @@
 var css = require('sheetify')
 var snarkdown = require('snarkdown')
+var stringToColour = require('../../lib/string-to-colour')
 
 const cardActionPrefix = css`
 :host {
@@ -37,7 +38,9 @@ const actionCardNamePrefix = css`
 
 module.exports = {
   toCommentAction,
-  toUpdateAction
+  toUpdateAction,
+  toAction,
+  toActionWithAttachments
 }
 
 function toCommentAction (action, actionColour) {
@@ -87,4 +90,67 @@ function toUpdateAction (action, actionColour) {
   ${action.data.listAfter.name.toLowerCase().includes('done') ? '<h1>🎉🎊🚀</h1>' : ''}`
 
   return description
+}
+
+const attachmentsPrefix = css`
+:host{
+  height: 100px;
+  height: auto;
+  padding: 0.5em;
+}
+:host img {
+  border-radius: 2px;
+  width: 350px;
+  vertical-align: middle;
+  box-shadow: 1px 1px 11px 0px #dedede;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+`
+
+function toActionWithAttachments (attachmentsByCard) {
+  return (action, index) => {
+    let description = ''
+
+    description += `
+    <section>
+      ${toAction(action, index)}
+      <section class="${attachmentsPrefix}">
+        ${(attachmentsByCard[action.data.card.id] || [])
+          .map(a => a.url)
+          .filter(u => u.includes('.png'))
+          .map(u => `<a tabindex="-1" target="_blank" href="${u}"><img src="${u}"/></a>`)
+          .join('')}
+      </section>
+    </section>`
+
+    return description
+  }
+}
+
+const actionPrefix = css`
+:host {
+  display: block;
+  max-width: 100vw;
+  overflow: scroll;
+  max-height: 100vh;
+  position: relative;
+}
+:host pre {
+  white-space: pre-line;
+}
+`
+
+function toAction (action, index) {
+  let description = ''
+
+  const actionColour = stringToColour(action.data.card.name)
+  if (action.type === 'updateCard') {
+    description += toUpdateAction(action, actionColour)
+  }
+  if (action.type === 'commentCard') {
+    description += toCommentAction(action, actionColour)
+  }
+  return `
+    <section tabindex="${index}" class="${actionPrefix} pa5">${description}</section>`
 }
